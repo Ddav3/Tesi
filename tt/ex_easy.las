@@ -1,22 +1,25 @@
-%constant(distance, 1). 
-%distance(2).
-%constant(distance, 3). 
+distance(0..5).
 
 
-#pos(id00@1,{idle},{slow_down, accelerate},{distance(2). car_at_distance(2).}).
-#pos(id01@1,{slow_down},{idle, accelerate},{distance(2). car_at_distance(1).}).
-#pos(id02@1,{accelerate},{slow_down, idle},{distance(2). car_at_distance(3).}).
-#pos(id03@1,{accelerate},{slow_down, idle},{distance(2). car_at_distance(3).}).
-#pos(id04@1,{slow_down},{idle, accelerate},{distance(2). car_at_distance(1).}).
-#pos(id05@1,{idle},{slow_down, accelerate},{distance(2). car_at_distance(2).}).
-#pos(id06@1,{slow_down},{idle, accelerate},{distance(2). car_at_distance(1).}).
-#pos(id07@1,{idle},{slow_down, accelerate},{distance(2). car_at_distance(2).}).  
+#pos(id00@1,{idle},{slow_down, accelerate},{limit(2). agent_at(1). car_at_distance(3). car_at_distance(4).}).
+#pos(id01@1,{slow_down},{idle, accelerate},{limit(2). agent_at(1). car_at_distance(5). car_at_distance(1).}).
+#pos(id02@1,{accelerate},{slow_down, idle},{limit(2). agent_at(2). car_at_distance(6). car_at_distance(5).}).
+#pos(id03@1,{accelerate},{slow_down, idle},{limit(2). agent_at(0). car_at_distance(4). car_at_distance(3).}).
+#pos(id04@1,{slow_down},{idle, accelerate},{limit(2). agent_at(2). car_at_distance(3). car_at_distance(5).}).
+#pos(id05@1,{idle},{slow_down, accelerate},{limit(2). agent_at(2). car_at_distance(4). car_at_distance(6).}).
+#pos(id06@1,{slow_down},{idle, accelerate},{limit(2). agent_at(0). car_at_distance(1). car_at_distance(0).}).
+#pos(id07@1,{idle},{slow_down, accelerate},{limit(2). agent_at(0). car_at_distance(2). car_at_distance(3).}).  
+#pos(id08@1,{accelerate},{slow_down, idle},{limit(2). agent_at(1). car_at_distance(5). car_at_distance(4).}).
 
 %----------------------------------------------------------------------------------------
 
-is_close(D, Dl) :- car_at_distance(D), distance(Dl), D < Dl.
-is_far(D, Dl) :- car_at_distance(D), distance(Dl), D > Dl.
-is_at(D, Dl) :- car_at_distance(D), distance(Dl), D = Dl.
+closest_car_at(Dm):- car_at_distance(Dm), car_at_distance(DM), Dm < DM.
+
+distance_from_agent(Da):- agent_at(A), closest_car_at(Dm), distance(Da), Dm = A + Da.
+
+someone_is_close(Da, Dl) :- distance_from_agent(Da), limit(Dl), Da < Dl.
+someone_is_far(Da, Dl) :- distance_from_agent(Da), limit(Dl), Da > Dl.
+someone_is_at(Da, Dl) :- distance_from_agent(Da), limit(Dl), Da = Dl.
 
 
 
@@ -28,19 +31,15 @@ is_at(D, Dl) :- car_at_distance(D), distance(Dl), D = Dl.
 #modeh(idle).
 #modeh(slow_down).
 
-#modeb(var(car_at_distance)).
-#modeb(1, is_close(var(car_at_distance), const(distance))).
-%#modeb(not is_close(var(car_at_distance), const(distance))).
-#modeb(1,is_at(var(car_at_distance), const(distance))).
-#modeb(not is_at(var(car_at_distance), const(distance))).
-#modeb(1, is_far(var(car_at_distance), const(distance))).
+%#modeb(1, distance_from_agent(const(distance))).
+#modeb(1, someone_is_close(var(distance_from_agent), const(limit))).
+#modeb(1, someone_is_at(var(distance_from_agent), const(limit))). 
+#modeb(1, someone_is_far(var(distance_from_agent), const(limit))).
 
-#maxv(2).
+#maxv(1).
 
 %bias ----------------------------------
 #bias("penalty(2, head(X)) :- in_head(X).").
 #bias("penalty(2, body(X)) :- in_body(X).").
 
-%#bias(":- in_head(slow_down), not in_body(is_close(_,_)).").
-
-%#bias(":- in_head(accelerate), not in_body(is_far(_,_)).").
+#bias(":- in_head(X), not in_body(distance_from_agent(_,_)).").

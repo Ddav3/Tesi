@@ -15,7 +15,7 @@ distance(0..5).
 
 closest_car_at(Dm):- car_at_distance(Dm), car_at_distance(DM), Dm < DM.
 
-distance_from_agent(Da):- agent_at(A), closest_car_at(Dm), distance(Da), Dm = A + Da.
+distance_from_agent(Da):- agent_at(A), closest_car_at(Dm), distance(Da), Dm = A + Da. %da "evolvere" per in_the_way
 
 someone_is_close(Da, Dl) :- distance_from_agent(Da), limit(Dl), Da < Dl.
 someone_is_far(Da, Dl) :- distance_from_agent(Da), limit(Dl), Da > Dl.
@@ -39,7 +39,7 @@ someone_is_at(Da, Dl) :- distance_from_agent(Da), limit(Dl), Da = Dl.
 #maxv(1).
 
 %bias ----------------------------------
-#bias("penalty(2, head(X)) :- in_head(X).").
-#bias("penalty(2, body(X)) :- in_body(X).").
+%#bias("penalty(2, head(X)) :- in_head(X).").
+%#bias("penalty(1, body(X)) :- in_body(X).").
 
-#bias(":- in_head(X), not in_body(distance_from_agent(_,_)).").
+%#bias(":- not in_body(Y).").

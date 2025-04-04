@@ -1,15 +1,15 @@
 distance(0..5).
+limit(2). 
 
-
-#pos(id00@1,{idle},{slow_down, accelerate},{limit(2). agent_at(1). car_at_distance(3). car_at_distance(4).}).
-#pos(id01@1,{slow_down},{idle, accelerate},{limit(2). agent_at(1). car_at_distance(5). car_at_distance(1).}).
-#pos(id02@1,{accelerate},{slow_down, idle},{limit(2). agent_at(2). car_at_distance(6). car_at_distance(5).}).
-#pos(id03@1,{accelerate},{slow_down, idle},{limit(2). agent_at(0). car_at_distance(4). car_at_distance(3).}).
-#pos(id04@1,{slow_down},{idle, accelerate},{limit(2). agent_at(2). car_at_distance(3). car_at_distance(5).}).
-#pos(id05@1,{idle},{slow_down, accelerate},{limit(2). agent_at(2). car_at_distance(4). car_at_distance(6).}).
-#pos(id06@1,{slow_down},{idle, accelerate},{limit(2). agent_at(0). car_at_distance(1). car_at_distance(0).}).
-#pos(id07@1,{idle},{slow_down, accelerate},{limit(2). agent_at(0). car_at_distance(2). car_at_distance(3).}).  
-#pos(id08@1,{accelerate},{slow_down, idle},{limit(2). agent_at(1). car_at_distance(5). car_at_distance(4).}).
+#pos(id00@1,{idle},{slow_down, accelerate},{agent_at(1). car_at_distance(3). car_at_distance(4).}).
+#pos(id01@1,{slow_down},{idle, accelerate},{agent_at(1). car_at_distance(5). car_at_distance(1).}).
+#pos(id02@1,{accelerate},{slow_down, idle},{agent_at(2). car_at_distance(6). car_at_distance(5).}).
+#pos(id03@1,{accelerate},{slow_down, idle},{agent_at(0). car_at_distance(4). car_at_distance(3).}).
+#pos(id04@1,{slow_down},{idle, accelerate},{agent_at(2). car_at_distance(3). car_at_distance(5).}).
+#pos(id05@1,{idle},{slow_down, accelerate},{agent_at(2). car_at_distance(4). car_at_distance(6).}).
+#pos(id06@1,{slow_down},{idle, accelerate},{agent_at(0). car_at_distance(1). car_at_distance(0).}).
+#pos(id07@1,{idle},{slow_down, accelerate},{agent_at(0). car_at_distance(2). car_at_distance(3).}).  
+#pos(id08@1,{accelerate},{slow_down, idle},{agent_at(1). car_at_distance(5). car_at_distance(4).}).
 
 %----------------------------------------------------------------------------------------
 
